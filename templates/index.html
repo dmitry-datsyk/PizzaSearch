@@ -9,12 +9,28 @@
 <br>
 <br>
 <p style="margin-left: 360px">
-<a  href="">Пиццы</a>
-    <span style="margin-left: 40px">  <a  href="">Рейтинги</a></span>
-    <span style="margin-left: 40px">  <a  href="">Скидки и акции</a></span>
-    <span style="margin-left: 40px">   <a  href ='{% url 'login'%}'>Войти</a>
-    </span><span style="margin-left: 40px">   <a  href ='{% url 'register'%}'>
+    <a href="">Пиццы</a>
+    <span style="margin-left: 40px">  <a href="">Рейтинги</a></span>
+    <span style="margin-left: 40px">  <a href="">Скидки и акции</a></span>
+    <span style="margin-left: 40px">   <a href='{% url 'login' %}'>Войти</a>
+    </span><span style="margin-left: 40px">   <a href='{% url 'register' %}'>
                 Регистрация</a> </span>
 </p>
+
+<p>
+<br>
+<br>
+
+    {% for pizza in piz.all %}
+        <span style="margin-left: 370px"><strong>{{ pizza.name }}</strong></span>
+        <br>
+        <span style="margin-left: 370px">
+      <img width="100" src="{{ pizza.image.url }}"></img></span>
+        <br>
+      <span style="margin-left: 370px">{{ pizza.description }}</span>
+    {% endfor %}
+
+</p>
+
 </body>
 </html>

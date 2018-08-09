@@ -5,10 +5,12 @@ from django.http import HttpResponseRedirect
 from django.views.generic.base import View
 from django.contrib.auth import login, logout
 
+from PizzaSearch.models import Pizza
+
 
 def index(request):
-    temp = 'Dima'
-    return render(request, 'index.html', {'temp': temp})
+    piz = Pizza.objects
+    return render(request, 'index.html', {'piz': piz})
 
 
 class RegisterFormView(FormView):
