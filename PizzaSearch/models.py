@@ -27,7 +27,7 @@ class Pizza(models.Model):
                             verbose_name='Название')
     description = models.TextField(max_length=300, null=True, blank=True,
                                    verbose_name='Состав')
-    price = models.FloatField(verbose_name='Цена', null=True)
+    # price = models.FloatField(verbose_name='Цена', null=True)
     image = models.ImageField(upload_to='items/', verbose_name='Изображение',
                               null=True, blank=True)
     shop = models.ForeignKey(

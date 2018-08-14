@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}{% endblock %}
+{% block content %}
+       <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .product-item {
+            width: 190px;
+            margin: 0 auto;
+            padding: 10px 10px 5px 10px;
+            border: 1px solid #eee;
+            background: white;
+            font-family: "Open Sans";
+            overflow: hidden;
+            transition: .4s linear;
+        }
+
+        .product-img {
+            transition: 1s ease-in-out;
+        }
+
+        .product-img:hover {
+            transform: scale(1.1);
+        }
+
+        .product-img img {
+            display: block;
+            width: 100%;
+        }
+
+        .product-list {
+            margin-top: 15px;
+        }
+
+        .product-list h3 {
+            font-weight: 700;
+            color: #39404B;
+            margin: 0;
+            text-transform: uppercase;
+            font-size: 14px;
+            line-height: 2;
+        }
+
+        .price {
+            color: #E34D38;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .stars {
+            height: 14px;
+            line-height: 14px;
+            margin: 7px 0;
+        }
+
+        .stars:before {
+            content: "\f005\f005\f005\f005\f006";
+            color: #EFB71C;
+            font-size: 14px;
+            font-family: FontAwesome;
+        }
+
+        .add-to-cart:hover .cart-button, .wishlist:hover, .compare:hover {
+            color: #E34D38;
+        }
+
+    .rating {
+    float:left;
+}
+
+/* Конструкция :not(:checked) работает как фильтр, чтобы браузеры, которые не поддерживают псевдокласс :checked не применяли эти свойства. Все браузеры, поддерживающие псевдокласс :checked, поддерживают и псевдокласс :not(), так что фильтр должен отработать правильно. */
+.rating:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+    clip:rect(0,0,0,0);
+}
+
+.rating:not(:checked) > label {
+    float:right;
+    width:1em;
+    padding:0 .1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:200%;
+    line-height:1.2;
+    color:#ddd;
+    text-shadow:1px 1px #bbb, 2px 2px #666, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+.rating:not(:checked) > label:before {
+    content: '★ ';
+}
+
+.rating > input:checked ~ label {
+    color: #f70;
+    text-shadow:1px 1px #c60, 2px 2px #940, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+    color: gold;
+    text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+    color: #ea0;
+    text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
+}
+.rating > label:active {
+    position:relative;
+    top:2px;
+    left:2px;
+}
+
+    </style>
+        <div class="col s4">
+  {% for pizza in piz.all %}
+            <div class="product-item">
+                <div class="product-list">
+                    <h3> {{ pizza.name }}</h3>
+                    <div class="product-img">
+                            <img width="100"
+                                 src="{{ MEDIA_URL }}{{ pizza.image.url }}">
+                    </div>
+                    <span class="price"> {{ pizza.description }}</span>
+                </div>
+{#                  {% for marks in mark.all %}#}
+{#                {{ marks }}#}
+{#                      {% endfor %}#}
+                <div><h7>Рейтинг пиццы:</h7>
+            <span style="color: #e57812; font-size: 18px; font-weight: bold">
+                {{ num }}
+            </span>
+            </div>
+                <div>
+                <form method="post" class="rating" name="rating">
+{% csrf_token %}
+    <legend>Поставить оценку:</legend>
+    <input type="radio" id="star10" name="rating" value="10" onchange="this.form.submit()"/>
+                    <label for="star10" title="Ten">10 stars</label>
+    <input type="radio" id="star9" name="rating" value="9" onchange="this.form.submit()"/><label for="star9" title="Nine">9 stars</label>
+    <input type="radio" id="star8" name="rating" value="8" onchange="this.form.submit()" /><label for="star8" title="Eight">8 stars</label>
+    <input type="radio" id="star7" name="rating" value="7" onchange="this.form.submit()" /><label for="star7" title="Seven">7 stars</label>
+    <input type="radio" id="star6" name="rating" value="6" onchange="this.form.submit()" /><label for="star6" title="Six">6 star</label>
+    <input type="radio" id="star5" name="rating" value="5" onchange="this.form.submit()" /><label for="star5" title="Five!">5 stars</label>
+    <input type="radio" id="star4" name="rating" value="4" onchange="this.form.submit()" /><label for="star4" title="Four">4 stars</label>
+    <input type="radio" id="star3" name="rating" value="3" onchange="this.form.submit()" /><label for="star3" title="Three">3 stars</label>
+    <input type="radio" id="star2" name="rating" value="2" onchange="this.form.submit()" /><label for="star2" title="Two">2 stars</label>
+    <input type="radio" id="star1" name="rating" value="1" onchange="this.form.submit()" /><label for="star1" title="One">1 star</label>
+                </form>
+
+            </div>
+            </div>
+
+        </div>
+        <div class="col s4"></div>
+    {% endfor %}
+{% endblock %}

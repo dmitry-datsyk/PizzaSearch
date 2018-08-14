@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}Автоматический поиск{% endblock %}
+{% block content %}
+    <table   border="1">
+    <tr>
+        <td>Название пиццы</td>
+         <td>Изображение</td>
+         <td>Описание</td>
+    </tr>
+    {% for lst in res %}
+    <tr>
+    <td>   {{ lst.0 }}</td>
+    <td>   {{ lst.1 }}</td>
+    <td>   {{ lst.2 }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+
+{% endblock %}

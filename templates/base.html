@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script
+            src="http://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="{% static 'css/materialize.css' %}">
+        <script src="{% static 'js/materialize.js' %}"></script>
+        <meta charset="UTF-8">
+        <title>{% block title %}Main Page{% endblock %}</title>
+    <style>
+
+.top-menu {
+  margin: 0 60px;
+  position: relative;
+}
+
+.menu-main {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+
+.menu-main li {
+  display: inline-block;
+  margin-right: -8px;
+}
+.menu-main a {
+  text-decoration: none;
+  display: inline-block;
+  padding: 0px 30px;
+  font-family: 'PT Sans Caption', sans-serif;
+  color: white;
+  transition: .3s linear;
+}
+
+    </style>
+
+    </head>
+<body>
+<div class="row">
+<div class="col s3"></div>
+    <div class="col s6  ">
+
+    </div>
+    <div class="col s3"></div>
+
+</div>
+
+
+<div class="row">
+
+
+     <div class="col s2"></div>
+      <div class="col s8 brown lighten-1">
+    <a style="color: white; font-family: 'Arial Black';
+     font-size: 24px" href='{% url 'index' %}'>ПиццаПоиск</a>
+    {% if user.is_active %}
+            <span style="color: white; font-size: 14px;
+          font-family: 'PT Sans Caption', sans-serif; text-align: right;
+        margin-left: 470px">Пользователь {{ request.user }}    |
+           <a style="color: #e5e5e5; font-size: 14px;
+          font-family: 'PT Sans Caption', sans-serif; text-align: right;
+        margin-left: 20px"  href='{% url 'logout' %}'> Выход</a></span>
+         {% else %}
+        <a style="color: white;
+          font-family: 'PT Sans Caption', sans-serif; text-align: right;
+        margin-left: 600px"  href='{% url 'login' %}'>Войти</a>
+    {% endif %}
+
+    <br>
+          <br>
+
+
+    <div class="top-menu ">
+
+       <ul class="menu-main" style="height: 50px">
+        <li> <a href="{% url 'pizzas' %}">Пиццы</a></li>
+        <li> <a href="">Рейтинги</a></li>
+        <li> <a href="">Скидки и акции</a></li>
+         {% if user.is_active %}
+        <li> <a  href=''>Развлечения</a></li>
+             {% else %}
+             <li> <a  href='{% url 'login' %}'>Развлечения</a></li>
+           {% endif %}
+
+      </ul>
+
+    </div>
+
+     </div>
+
+{#<div class="card-panel red darken-2">#}
+{#    <table>#}
+{#   <td> <a class="brand-logo" href="">Пиццы</a></td>#}
+{#   <td>   <a href="">Рейтинги</a></td>#}
+{#       <td>   </td>#}
+{#     <td> <a href='{% url 'login' %}'>Войти</a></td>#}
+{#      <td>  <a  href='{% url 'register' %}'>Регистрация</a></td>#}
+{#</table>#}
+{#     </div>#}
+<div class="col s2"></div>
+
+
+    </div>
+
+<div class="row">
+<div class="col s2"></div>
+ <div class="col s8">
+       {% block content %} {% endblock %}
+ </div>
+ <div class="col s2"></div>
+</div>
+</body>
+</html>
