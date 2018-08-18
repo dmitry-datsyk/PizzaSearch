@@ -28,4 +28,5 @@ urlpatterns = [
     url(r'^autamatic_search/$', views.autamatic_search_data),
     url(r'^pizzas/$', views.pizzas, name='pizzas'),
     url(r'^pizza/(?P<pizza_id>\d+)/$', views.pizza, name='pizza'),
+    url(r'^autamatic_check/$', views.autamatic_check, name='check'),
 ]

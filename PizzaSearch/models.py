@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -27,11 +28,30 @@ class Pizza(models.Model):
                             verbose_name='Название')
     description = models.TextField(max_length=300, null=True, blank=True,
                                    verbose_name='Состав')
-    # price = models.FloatField(verbose_name='Цена', null=True)
     image = models.ImageField(upload_to='items/', verbose_name='Изображение',
                               null=True, blank=True)
     shop = models.ForeignKey(
         Shop, related_name='pizzas', on_delete=models.CASCADE,
+        verbose_name='ID магазина')
+    on_sale = models.BooleanField(verbose_name='В продаже', default=True)
+
+
+class PizzaCheck(models.Model):
+    class Meta:
+        verbose_name = 'Пицца'
+        verbose_name_plural = 'Пиццы'
+
+    def __str__(self):
+        return '{}'.format(self.name)
+
+    name = models.CharField(max_length=100, null=True, blank=True,
+                            verbose_name='Название')
+    description = models.TextField(max_length=300, null=True, blank=True,
+                                   verbose_name='Состав')
+    image = models.ImageField(upload_to='check/', verbose_name='Изображение',
+                              null=True, blank=True)
+    shop = models.ForeignKey(
+        Shop, related_name='pizzas_check', on_delete=models.CASCADE,
         verbose_name='ID магазина')
 
 
@@ -56,9 +76,12 @@ class Comment(models.Model):
     def __str__(self):
         return '{}. {}'.format(self.id, self.sphere)
 
-    user_id = models.IntegerField(verbose_name='ID пользователя')
-    comment = models.TextField(max_length=1000, verbose_name='Комментарий')
+    # user_id = models.IntegerField(verbose_name='ID пользователя')
+    comment = models.TextField(verbose_name='Комментарий')
     date_comment = models.DateField(verbose_name='Дата создания')
     pizza = models.ForeignKey(
         Pizza, related_name='comment', on_delete=models.CASCADE,
         verbose_name='ID пиццы')
+    user = models.ForeignKey(
+        User, related_name='comment_user', on_delete=models.CASCADE,
+        verbose_name='ID user')

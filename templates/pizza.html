@@ -4,18 +4,18 @@
 
 {% block title %}{% endblock %}
 {% block content %}
-       <style>
+    <style>
         * {
             box-sizing: border-box;
         }
 
         .product-item {
-            width: 190px;
+            width: 100%;
             margin: 0 auto;
             padding: 10px 10px 5px 10px;
             border: 1px solid #eee;
             background: white;
-            font-family: "Open Sans";
+            font-family: Calibri;
             overflow: hidden;
             transition: .4s linear;
         }
@@ -25,144 +25,270 @@
         }
 
         .product-img:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
         .product-img img {
             display: block;
-            width: 100%;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .product-list {
-            margin-top: 15px;
+            margin-top: 5px;
         }
 
         .product-list h3 {
-            font-weight: 700;
-            color: #39404B;
+            font-weight: 900;
+            color: #cf3626;
             margin: 0;
             text-transform: uppercase;
-            font-size: 14px;
-            line-height: 2;
+            font-size: 24px;
+            text-align: center;
         }
 
         .price {
-            color: #E34D38;
+            color: #5a5356;
             display: block;
             margin-bottom: 12px;
-        }
-
-        .stars {
-            height: 14px;
-            line-height: 14px;
-            margin: 7px 0;
-        }
-
-        .stars:before {
-            content: "\f005\f005\f005\f005\f006";
-            color: #EFB71C;
-            font-size: 14px;
-            font-family: FontAwesome;
         }
 
         .add-to-cart:hover .cart-button, .wishlist:hover, .compare:hover {
             color: #E34D38;
         }
 
-    .rating {
-    float:left;
-}
+        .rating {
+            float: left;
+            width: 100%;
+            background: #ffffff;
+        }
 
-/* Конструкция :not(:checked) работает как фильтр, чтобы браузеры, которые не поддерживают псевдокласс :checked не применяли эти свойства. Все браузеры, поддерживающие псевдокласс :checked, поддерживают и псевдокласс :not(), так что фильтр должен отработать правильно. */
-.rating:not(:checked) > input {
-    position:absolute;
-    top:-9999px;
-    clip:rect(0,0,0,0);
-}
+        .rating:not(:checked) > input {
+            position: absolute;
+            top: -9999px;
+            clip: rect(0, 0, 0, 0);
+        }
 
-.rating:not(:checked) > label {
-    float:right;
-    width:1em;
-    padding:0 .1em;
-    overflow:hidden;
-    white-space:nowrap;
-    cursor:pointer;
-    font-size:200%;
-    line-height:1.2;
-    color:#ddd;
-    text-shadow:1px 1px #bbb, 2px 2px #666, .1em .1em .2em rgba(0,0,0,.5);
-}
+        .rating:not(:checked) > label {
+            float: right;
+            width: 1em;
+        {#padding: 0.1em;#} overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 220%;
+            line-height: 1.5;
+            color: #ddd;
+            text-shadow: 1px 1px #bbb, 2px 2px #666, .1em .1em .2em rgba(0, 0, 0, .5);
+        }
 
-.rating:not(:checked) > label:before {
-    content: '★ ';
-}
+        .rating:not(:checked) > label:before {
+            content: '★ ';
+        }
 
-.rating > input:checked ~ label {
-    color: #f70;
-    text-shadow:1px 1px #c60, 2px 2px #940, .1em .1em .2em rgba(0,0,0,.5);
-}
+        .rating > input:checked ~ label {
+            color: #f70;
+            text-shadow: 1px 1px #c60, 2px 2px #940, .1em .1em .2em rgba(0, 0, 0, .5);
+        }
 
-.rating:not(:checked) > label:hover,
-.rating:not(:checked) > label:hover ~ label {
-    color: gold;
-    text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
-}
+        .rating:not(:checked) > label:hover,
+        .rating:not(:checked) > label:hover ~ label {
+            color: gold;
+            text-shadow: 1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0, 0, 0, .5);
+        }
 
-.rating > input:checked + label:hover,
-.rating > input:checked + label:hover ~ label,
-.rating > input:checked ~ label:hover,
-.rating > input:checked ~ label:hover ~ label,
-.rating > label:hover ~ input:checked ~ label {
-    color: #ea0;
-    text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
-}
-.rating > label:active {
-    position:relative;
-    top:2px;
-    left:2px;
-}
+        .rating > input:checked + label:hover,
+        .rating > input:checked + label:hover ~ label,
+        .rating > input:checked ~ label:hover,
+        .rating > input:checked ~ label:hover ~ label,
+        .rating > label:hover ~ input:checked ~ label {
+            color: #ea0;
+            text-shadow: 1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0, 0, 0, .5);
+        }
 
+        .rating > label:active {
+            position: relative;
+            top: 2px;
+            left: 2px;
+        }
+
+        .textarea {
+            overflow: hidden;
+            background: #ffffff;
+            border-color: #9e9da0;
+            width: 99%;
+            word-wrap: break-word;
+            height: 150px;
+            font-size: 14px;
+
+        }
+
+        .leftstr, .rightstr {
+            float: left;
+            width: 50%;
+        }
+
+        .rightstr {
+            text-align: right;
+        }
     </style>
-        <div class="col s4">
-  {% for pizza in piz.all %}
+
+    <div class="col s7">
+        {% for pizza in piz.all %}
             <div class="product-item">
                 <div class="product-list">
                     <h3> {{ pizza.name }}</h3>
+                    {{ pizza.shop.name }}
+                    <br>
                     <div class="product-img">
-                            <img width="100"
-                                 src="{{ MEDIA_URL }}{{ pizza.image.url }}">
+                        <img width="100"
+                             src="{{ MEDIA_URL }}{{ pizza.image.url }}">
                     </div>
-                    <span class="price"> {{ pizza.description }}</span>
+
+                    <span style="font-weight: bold; font-family: 'Arial'">
+                            Состав:</span>
+                    <span class="price">{{ pizza.description }}</span>
                 </div>
-{#                  {% for marks in mark.all %}#}
-{#                {{ marks }}#}
-{#                      {% endfor %}#}
-                <div><h7>Рейтинг пиццы:</h7>
-            <span style="color: #e57812; font-size: 18px; font-weight: bold">
-                {{ num }}
+                {% if user.is_active %}
+                    <form method="post" name="comment">
+                        {% csrf_token %}
+                        <textarea name="comment" class="textarea"
+                                  placeholder="Оставьте отзыв об этой пицце "></textarea>
+                        <input type="submit" value="Оставить отзыв">
+                    </form>
+                {% endif %}
+
+                <div><h5>Отзывы:</h5>
+                    {% for comment in comments %}
+
+                        <p class="leftstr" style="font-family: 'Arial'; font-size: 14px;
+                         font-weight: bold; color: #42566b"> {{ comment.user.username }}</p>
+                        <p class="rightstr"
+                           style="font-size: 10px; color: #727174">{{ comment.date_comment }}</p>
+                        <div style="clear: left"></div>
+
+                        <div style="background: white; text-align: left">
+                        <span style="color: #363538; font-size: 12px;
+                                font-family: 'Bookman Old Style'">
+                            {{ comment.comment }}
+                        </span>
+                        </div>
+                        <br>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+            </div>
+            <div class="col s5">
+                <div style="background: #ffffff">
+                    {% if mark_user != 0 %}
+                        <div style="margin-left: 10px">
+                            <span style="font-weight: bold">Ваша оценка:</span>
+                            <span style="color: #cf8b19; font-size: 22px;
+                        font-weight: bold">
+                {{ mark_user }}
             </span>
-            </div>
-                <div>
-                <form method="post" class="rating" name="rating">
-{% csrf_token %}
-    <legend>Поставить оценку:</legend>
-    <input type="radio" id="star10" name="rating" value="10" onchange="this.form.submit()"/>
-                    <label for="star10" title="Ten">10 stars</label>
-    <input type="radio" id="star9" name="rating" value="9" onchange="this.form.submit()"/><label for="star9" title="Nine">9 stars</label>
-    <input type="radio" id="star8" name="rating" value="8" onchange="this.form.submit()" /><label for="star8" title="Eight">8 stars</label>
-    <input type="radio" id="star7" name="rating" value="7" onchange="this.form.submit()" /><label for="star7" title="Seven">7 stars</label>
-    <input type="radio" id="star6" name="rating" value="6" onchange="this.form.submit()" /><label for="star6" title="Six">6 star</label>
-    <input type="radio" id="star5" name="rating" value="5" onchange="this.form.submit()" /><label for="star5" title="Five!">5 stars</label>
-    <input type="radio" id="star4" name="rating" value="4" onchange="this.form.submit()" /><label for="star4" title="Four">4 stars</label>
-    <input type="radio" id="star3" name="rating" value="3" onchange="this.form.submit()" /><label for="star3" title="Three">3 stars</label>
-    <input type="radio" id="star2" name="rating" value="2" onchange="this.form.submit()" /><label for="star2" title="Two">2 stars</label>
-    <input type="radio" id="star1" name="rating" value="1" onchange="this.form.submit()" /><label for="star1" title="One">1 star</label>
-                </form>
+                        </div>
+                        <br>
+                    {% endif %}
+                    <div style="margin-left: 10px">
+                        <span style="font-weight: bold">Рейтинг:</span>
+                        <span style="color: #e57812; font-size: 22px; font-weight: bold">
+                {{ num }}
+                    <span style="color: #e57812; font-size: 18px;
+                    font-weight: bold">({{ count }})</span>
+            </span>
+                    </div>
 
-            </div>
-            </div>
+                    <br>
 
-        </div>
-        <div class="col s4"></div>
-    {% endfor %}
+                    <div>
+                        {% if user.is_active %}
+                            <form method="post" class="rating" name="rating"
+                                  style="background: #ffffff">
+                                {% csrf_token %}
+                                <legend style="font-weight: bold;
+                                margin-left: 10px">Поставить оценку:
+                                </legend>
+                                <input type="radio" id="star10" name="rating"
+                                       value="10"
+                                       onchange="this.form.submit()"/>
+                                <label for="star10" title="10">10 stars</label>
+                                <input type="radio" id="star9" name="rating"
+                                       value="9"
+                                       onchange="this.form.submit()"/><label
+                                    for="star9"
+                                    title="9">9
+                                stars</label>
+                                <input type="radio" id="star8" name="rating"
+                                       value="8"
+                                       onchange="this.form.submit()"/><label
+                                    for="star8"
+                                    title="8">8
+                                stars</label>
+                                <input type="radio" id="star7" name="rating"
+                                       value="7"
+                                       onchange="this.form.submit()"/><label
+                                    for="star7"
+                                    title="7">7
+                                stars</label>
+                                <input type="radio" id="star6" name="rating"
+                                       value="6"
+                                       onchange="this.form.submit()"/><label
+                                    for="star6"
+                                    title="6">6
+                                star</label>
+                                <input type="radio" id="star5" name="rating"
+                                       value="5"
+                                       onchange="this.form.submit()"/><label
+                                    for="star5"
+                                    title="5">5
+                                stars</label>
+                                <input type="radio" id="star4" name="rating"
+                                       value="4"
+                                       onchange="this.form.submit()"/><label
+                                    for="star4"
+                                    title="4">4
+                                stars</label>
+                                <input type="radio" id="star3" name="rating"
+                                       value="3"
+                                       onchange="this.form.submit()"/><label
+                                    for="star3"
+                                    title="3">3
+                                stars</label>
+                                <input type="radio" id="star2" name="rating"
+                                       value="2"
+                                       onchange="this.form.submit()"/><label
+                                    for="star2"
+                                    title="2">2
+                                stars</label>
+                                <input type="radio" id="star1" name="rating"
+                                       value="1"
+                                       onchange="this.form.submit()"/><label
+                                    for="star1"
+                                    title="1">1
+                                star</label>
+                            </form>
+                        {% else %}
+                        {% endif %}
+                    </div>
+                <br>
+                <br>
+                    <div>
+                    <br>
+                    <br>
+                        <span style="font-weight: bold;
+                                margin-left: 10px">Заказать: </span>
+                        {% for pizza in piz.all %}
+                        <a style="font-weight: bold"
+                           href="{{ pizza.shop.website }}"
+                        target="_blank">{{ pizza.shop.name }}
+                            </a>
+                            {% endfor %}
+                    <br><br>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
 {% endblock %}
