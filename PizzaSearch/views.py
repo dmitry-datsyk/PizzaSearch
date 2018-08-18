@@ -15,13 +15,17 @@ from django.http import HttpResponseRedirect
 from django.views.generic.base import View
 from django.contrib.auth import login, logout
 from bs4 import BeautifulSoup
-from PizzaSearch.models import Pizza, Mark, Comment, PizzaCheck
-from untitled2.forms import CommentForm
+from PizzaSearch.models import Pizza, Mark, Comment, PizzaCheck, Shop
 
 
 def index(request):
-    piz = Pizza.objects.all
-    return render(request, 'index.html', {'piz': piz})
+    shop = Shop.objects.all
+    return render(request, 'index.html', {'shop': shop})
+
+
+def shop(request, shop_id):
+    pizza = Pizza.objects.filter(shop_id=shop_id).select_related('shop').all
+    return render(request, 'shop.html', {'pizza': pizza})
 
 
 class RegisterFormView(FormView):

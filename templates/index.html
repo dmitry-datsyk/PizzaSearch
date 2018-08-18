@@ -4,100 +4,14 @@
 
 {% block title %} Главная страница{% endblock %}
 {% block content %}
-    <style>
-        * {
-            box-sizing: border-box;
-        }
 
-        .product-item {
-            width: 300px;
-            margin: 0 auto;
-            padding: 10px 10px 5px 10px;
-            border: 1px solid #eee;
-            background: white;
-            font-family: "Open Sans";
-            overflow: hidden;
-            transition: .4s linear;
-        }
 
-        .product-img {
-            transition: 1s ease-in-out;
-        }
-
-        .product-img:hover {
-            transform: scale(1.1);
-        }
-
-        .product-img img {
-            display: block;
-            width: 100%;
-        }
-
-        .product-list {
-            margin-top: 15px;
-        }
-
-        .product-list h3 {
-            font-weight: 700;
-            color: #39404B;
-            margin: 0;
-            text-transform: uppercase;
-            font-size: 14px;
-            line-height: 2;
-        }
-
-        .stars {
-            height: 14px;
-            line-height: 14px;
-            margin: 7px 0;
-        }
-
-        .stars:before {
-            content: "\f005\f005\f005\f005\f006";
-            color: #EFB71C;
-            font-size: 14px;
-            font-family: FontAwesome;
-        }
-
-        .add-to-cart:hover .cart-button, .wishlist:hover, .compare:hover {
-            color: #E34D38;
-        }
-    </style>
-
-    {% for pizza in piz.all %}
-        <div class="row">
-        <div class="col s4">
-            <div class="product-item">
-                <div class="product-list">
-                    <h3> {{ pizza.name }}</h3>
-                    <div class="stars">9.8</div>
-                    <div class="product-img">
-                        <a href="">
-                            <img width="100"
-                                 src="{{ MEDIA_URL }}{{ pizza.image.url }}">
-                        </a>
-            </div>
-        </div>
-        <div class="col s4"></div>
-        <div class="col s4"></div>
-        </div>
+    {% for shop in shop.all %}
+        <a href="{%  url 'shop' shop.id  %}">
+        <h4>{{ shop.name }}</h4>
+        </a>
     {% endfor %}
 
 
-
-    {#        <table>#}
-    {#    {% for pizza in piz.all %}#}
-    {#        <tr>#}
-    {#        <td>#}
-    {#            <th colspan="2"><{{ pizza.name }}</th>#}
-    {#            <tr>#}
-    {#       <td><img width="100" src="{{ MEDIA_URL }}{{ pizza.image.url }}"></img></td>#}
-    {#       <td>{{ pizza.description }}</td>#}
-    {#       </tr>#}
-    {#            </td>#}
-    {#        </tr>#}
-    {##}
-    {#    {% endfor %}#}
-    {#</table>#}
 
 {% endblock %}

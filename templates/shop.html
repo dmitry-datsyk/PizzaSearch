@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}{% endblock %}
+{% block content %}
+     <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .product-item {
+            width: 100%;
+            margin: 0 auto;
+            padding: 10px 10px 5px 10px;
+            border: 1px solid #eee;
+            background: white;
+            font-family: Calibri;
+            overflow: hidden;
+            transition: .4s linear;
+            height: 320px;
+        }
+
+        .product-img {
+            transition: 1s ease-in-out;
+        }
+
+        .product-img:hover {
+            transform: scale(1.05);
+        }
+
+        .product-img img {
+            display: block;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .product-list {
+            margin-top: 5px;
+        }
+
+        .product-list h3 {
+            font-weight: 700;
+            color: #cf3626;
+            margin: 0;
+            text-transform: uppercase;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .description {
+            color: #5a5356;
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+        }
+
+     </style>
+    {% for pizza in pizza.all %}
+        <div class="col s4">
+            <div class="product-item">
+                <div class="product-list">
+                    <h3> {{ pizza.name }}</h3>
+                    <div class="product-img">
+                        <a href="{% url 'pizza' pizza.id %}">
+                            <img width="100"
+                                 src="{{ MEDIA_URL }}{{ pizza.image.url }}">
+                        </a>
+                    </div>
+                    <span style="font-weight: bold; font-family: 'Arial';
+                        font-size: 12px">
+                            Состав:</span>
+                    <span class="description"> {{ pizza.description }}</span>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+
+{% endblock %}
