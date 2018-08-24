@@ -112,25 +112,25 @@
             left: 2px;
         }
 
-            .textarea {
-                overflow: hidden;
-                background: #ffffff;
-                border-color: #9e9da0;
-                width: 99%;
-                word-wrap: break-word;
-                height: 150px;
-                font-size: 14px;
+        .textarea {
+            overflow: hidden;
+            background: #ffffff;
+            border-color: #9e9da0;
+            width: 99%;
+            word-wrap: break-word;
+            height: 150px;
+            font-size: 14px;
 
-            }
+        }
 
-            .leftstr, .rightstr {
-                float: left;
-                width: 50%;
-            }
+        .leftstr, .rightstr {
+            float: left;
+            width: 50%;
+        }
 
-            .rightstr {
-                text-align: right;
-            }
+        .rightstr {
+            text-align: right;
+        }
     </style>
 
     <div class="col s7">
@@ -138,14 +138,17 @@
             <div class="product-item">
                 <div class="product-list">
                     <h3> {{ pizza.name }}</h3>
-                    {{ pizza.shop.name }}
+                    <span style="color: #3194b8; margin-left: 30px;
+                        font-size: 16px; font-weight: bold">
+                        {{ pizza.shop.name }}
+                    </span>
                     <br>
                     <div class="product-img">
                         <img width="100"
                              src="{{ MEDIA_URL }}{{ pizza.image.url }}">
                     </div>
 
-                        <span style="font-weight: bold; font-family: 'Arial'">
+                    <span style="font-weight: bold; font-family: 'Arial'">
                                 Состав:</span>
                     <span class="price">{{ pizza.description }}</span>
                 </div>
@@ -192,12 +195,12 @@
                         </div>
 
                     {% endif %}
-                <br>
+                    <br>
                     <div style="margin-left: 10px">
                         <span style="font-weight: bold">Рейтинг:</span>
                         <span style="color: #e57812; font-size: 22px; font-weight: bold">
                 {{ num }}</span>
-                    <span style="color: #e57812; font-size: 18px;
+                        <span style="color: #e57812; font-size: 18px;
                     font-weight: bold">({{ count }})</span>
 
                     </div>
@@ -274,20 +277,27 @@
                         {% else %}
                         {% endif %}
                     </div>
-{#                <br>#}
-{#                <br>#}
+                    {#                <br>#}
+                    {#                <br>#}
                     <div>
-                    <br>
-                    <br>
+                        <br>
+                        <br>
                         <span style="font-weight: bold;
                                 margin-left: 10px">Заказать: </span>
                         {% for pizza in piz.all %}
-                        <a style="font-weight: bold"
-                           href="{{ pizza.shop.website }}"
-                        target="_blank">{{ pizza.shop.name }}
-                            </a>
-                            {% endfor %}
-                    <br><br>
+                            {% if pizza.on_sale == True %}
+                                <a style="font-weight: bold"
+                                   href="{{ pizza.shop.website }}"
+                                   target="_blank">{{ pizza.shop.name }}
+                                </a>
+                            {% else %}
+                                <a style="font-weight: bold; color: #cb0e08"
+                                   href="{{ pizza.shop.website }}"
+                                   target="_blank"> Уже не пекут(
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                        <br><br>
                     </div>
                 </div>
             </div>

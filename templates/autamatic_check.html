@@ -4,95 +4,100 @@
 
 {% block title %}{% endblock %}
 {% block content %}
-    {% if request.user.get_username == 'Admin'  %}
-    <form method="POST" name="check">
-    {% csrf_token %}
-    <button type="submit" name="check">Запустить проверку</button>
-
-    </form>
-
-    <p>Перестали делать:</p>
-     <table style="background: #ffffff">
-     <tr>
-         <td>ID пиццы</td>
-         <td>Название</td>
-         <td>ID магазина</td>
-         <td></td>
-         <td>Ссылка на сайт</td>
-     </tr>
-
-    {% for i in row %}
-    <tr>
-    <td>{{ i.0 }}</td>
-    <td>{{ i.1 }}</td>
-    <td>{{ i.2 }}</td>
-    <td>
-        <form method="post" name="delete">
+    {% if request.user.get_username == 'Admin' %}
+        <form method="POST" name="check">
             {% csrf_token %}
-       <button type="submit" value="{{ i.0 }}" name="delete">
-           Сделать неактивной</button>
+            <button type="submit" name="check">Запустить проверку</button>
+
         </form>
 
-    </td>
-    <td><a href="{{ i.3 }}" target="_blank">{{ i.4 }}</a></td>
-    </tr>
-    {% endfor %}
-    </table>
+        <p>Перестали делать:</p>
+        <table style="background: #ffffff">
+            <tr>
+                <td>ID пиццы</td>
+                <td>Название</td>
+                <td>ID магазина</td>
+                <td></td>
+                <td>Ссылка на сайт</td>
+            </tr>
 
-    <p>Начали делать:</p>
-    <table style="background: #ffffff">
-     <tr>
-         <td>ID пиццы</td>
-         <td>Название</td>
-         <td>ID магазина</td>
-         <td></td>
-         <td>Ссылка на сайт</td>
-     </tr>
+            {% for i in row %}
+                <tr>
+                    <td>{{ i.0 }}</td>
+                    <td>{{ i.1 }}</td>
+                    <td>{{ i.2 }}</td>
+                    <td>
+                        <form method="post" name="delete">
+                            {% csrf_token %}
+                            <button type="submit" value="{{ i.0 }}"
+                                    name="delete">
+                                Сделать неактивной
+                            </button>
+                        </form>
 
-    {% for i in row_add %}
-    <tr>
-    <td>{{ i.0 }}</td>
-    <td>{{ i.1 }}</td>
-    <td>{{ i.2 }}</td>
-    <td>
-        <form method="post" name="add">
-            {% csrf_token %}
-       <button type="submit" value="{{ i.0 }}" name="add">
-           Добавить на сайт</button>
-        </form>
+                    </td>
+                    <td><a href="{{ i.3 }}" target="_blank">{{ i.4 }}</a></td>
+                </tr>
+            {% endfor %}
+        </table>
 
-    </td>
-    <td><a href="{{ i.3 }}" target="_blank">{{ i.4 }}</a></td>
-    </tr>
-    {% endfor %}
-    </table>
+        <p>Начали делать:</p>
+        <table style="background: #ffffff">
+            <tr>
+                <td>ID пиццы</td>
+                <td>Название</td>
+                <td>ID магазина</td>
+                <td></td>
+                <td>Ссылка на сайт</td>
+            </tr>
 
-    <p>Опять начали делать:</p>
-    <table style="background: #ffffff">
-     <tr>
-         <td>ID пиццы</td>
-         <td>Название</td>
-         <td>ID магазина</td>
-         <td></td>
-         <td>Ссылка на сайт</td>
-     </tr>
+            {% for i in row_add %}
+                <tr>
+                    <td>{{ i.0 }}</td>
+                    <td>{{ i.1 }}</td>
+                    <td>{{ i.2 }}</td>
+                    <td>
+                        <form method="post" name="add">
+                            {% csrf_token %}
+                            <button type="submit" value="{{ i.0 }}" name="add">
+                                Добавить на сайт
+                            </button>
+                        </form>
 
-    {% for i in row_sale %}
-    <tr>
-    <td>{{ i.0 }}</td>
-    <td>{{ i.1 }}</td>
-    <td>{{ i.2 }}</td>
-    <td>
-        <form method="post" name="on_sale">
-            {% csrf_token %}
-       <button type="submit" value="{{ i.0 }}" name="on_sale">
-           Сделать активной</button>
-        </form>
+                    </td>
+                    <td><a href="{{ i.3 }}" target="_blank">{{ i.4 }}</a></td>
+                </tr>
+            {% endfor %}
+        </table>
 
-    </td>
-    <td><a href="{{ i.3 }}" target="_blank">{{ i.4 }}</a></td>
-    </tr>
-    {% endfor %}
-    </table>
+        <p>Опять начали делать:</p>
+        <table style="background: #ffffff">
+            <tr>
+                <td>ID пиццы</td>
+                <td>Название</td>
+                <td>ID магазина</td>
+                <td></td>
+                <td>Ссылка на сайт</td>
+            </tr>
+
+            {% for i in row_sale %}
+                <tr>
+                    <td>{{ i.0 }}</td>
+                    <td>{{ i.1 }}</td>
+                    <td>{{ i.2 }}</td>
+                    <td>
+                        <form method="post" name="on_sale">
+                            {% csrf_token %}
+                            <button type="submit" value="{{ i.0 }}"
+                                    name="on_sale">
+                                Сделать активной
+                            </button>
+                        </form>
+
+                    </td>
+                    <td><a href="{{ i.3 }}" target="_blank">{{ i.4 }}</a></td>
+                </tr>
+            {% endfor %}
+        </table>
     {% endif %}
 {% endblock %}

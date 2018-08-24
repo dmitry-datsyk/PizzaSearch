@@ -4,7 +4,7 @@
 
 {% block title %} Пиццы{% endblock %}
 {% block content %}
-<style>
+    <style>
         * {
             box-sizing: border-box;
         }
@@ -56,49 +56,21 @@
             font-size: 14px;
         }
 
-     </style>
-{##}
-{#    {% for pizza in piz.all %}#}
-{#        <div class="col s4">#}
-{##}
-{#            <div class="product-item">#}
-{#                <div class="product-list">#}
-{#                    <h3> {{ pizza.name }}</h3>#}
-{#                    <div class="product-img">#}
-{#                        <a href="{%  url 'pizza' pizza.id  %}">#}
-{#                            <img width="100"#}
-{#                                 src="{{ MEDIA_URL }}{{ pizza.image.url }}">#}
-{#                        </a>#}
-{##}
-{#                    </div>#}
-{##}
-{#                    <span class="price"> {{ pizza.description }}</span>#}
-{#                </div>#}
-{##}
-{#            </div>#}
-{##}
-{#        </div>#}
-{#        <div class="col s4">#}
-{##}
-{##}
-{#        </div>#}
-{#    {% endfor %}#}
-
-
+    </style>
     {% for pizza in piz.all %}
         <div class="col s4">
             <div class="product-item">
                 <div class="product-list">
-                       <a href="{% url 'pizza' pizza.id %}">
-                    <h3>
+                    <a href="{% url 'pizza' pizza.id %}">
+                        <h3>
                         <span style="text-transform: uppercase">
                             {{ pizza.name }}
                             </span>
-                        <br>
-                        <span style="color: #404544">
+                            <br>
+                            <span style="color: #404544">
                             ({{ pizza.shop.name }})</span>
-                    </h3>
-                       </a>
+                        </h3>
+                    </a>
                     <div class="product-img">
                         <a href="{% url 'pizza' pizza.id %}">
                             <img width="100"
@@ -113,9 +85,7 @@
 
             </div>
         </div>
-
-{% endfor %}
-
+    {% endfor %}
 {% endblock %}
 
 

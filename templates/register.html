@@ -6,7 +6,6 @@
 {% block content %}
      <form action="" method="post">
       {% csrf_token %}
-      <!-- as_p для того, чтобы каждый элемент формы был с новой строки -->
       <div class="input-field col s6">
        {{ form.username.label_tag }}
          {{ form.username }}

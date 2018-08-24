@@ -4,7 +4,7 @@
 
 {% block title %}{% endblock %}
 {% block content %}
-      <style>
+    <style>
         * {
             box-sizing: border-box;
         }
@@ -13,12 +13,11 @@
             width: 100%;
             margin: 0 auto;
             padding: 10px 10px 5px 10px;
-            {#border: 1px solid #eee;#}
-            background: white;
+        {#border: 1px solid #eee;#} background: white;
             font-family: Calibri;
             overflow: hidden;
             transition: .4s linear;
-            {#height: 320px;#}
+        {#height: 320px;#}
         }
 
         .product-img {
@@ -48,62 +47,42 @@
             font-size: 18px;
             text-align: center;
         }
-     </style>
+    </style>
     <table bgcolor="white">
-{#    <tr>#}
-{#        <td></td>#}
-{#        <td></td>#}
-{#        <td></td>#}
-{#        <td></td>#}
-{#    </tr>#}
-
-     {% for mark in average_mark %}
-        <tr>
-        <td> <h5 style="color: #896352; font-family: 'Arial';
+        {% for mark in average_mark %}
+            <tr>
+                <td><h5 style="color: #896352; font-family: 'Arial';
                 font-size: 20px; font-weight: bold; margin-left: 10px">
-            {{  forloop.counter }}. </h5></td>
-        <td>
-
-            <div class="product-item">
-                <div class="product-list">
-                   <a href="{% url 'pizza' mark.pizza__id %}">
-                       <span> {{ mark.pizza__name }}</span>
-                         </a>
-                </div>
-            </div>
-        </td>
-            <td>
-                <div style="margin-left: 10px">
+                    {{ forloop.counter }}. </h5></td>
+                <td>
+                    <div class="product-item">
+                        <div class="product-list">
+                            <a href="{% url 'pizza' mark.pizza__id %}">
+                                <span> {{ mark.pizza__name }}</span>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div style="margin-left: 10px">
                         <span style="font-weight: bold">Рейтинг:</span>
                         <span style="color: #e57812; font-size: 22px;
                          font-weight: bold">
                     {{ mark.avg_mark|floatformat:1 }}
                         </span>
-                    <span style="color: #e57812; font-size: 18px;
+                        <span style="color: #e57812; font-size: 18px;
                     font-weight: bold">({{ mark.cnt_user }})</span>
 
                     </div>
-            </td>
-
-        <td>
-             <a href="{%  url 'shop'  mark.pizza__shop__id  %}">
-        <h5
-        style="color: #896352; font-family: 'Arial';
+                </td>
+                <td>
+                    <a href="{% url 'shop'  mark.pizza__shop__id %}">
+                        <h5
+                                style="color: #896352; font-family: 'Arial';
                 font-size: 22px; font-weight: bold">{{ mark.pizza__shop__name }}</h5>
-        </a>
-
-
-        </td>
-        </tr>
-{#    {{ pizza.pizza.shop.name }}#}
-    {% endfor %}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
     </table>
-
-{#    {% for mark in average_mark %}#}
-{#    {{ mark.pizza__name }}#}
-{#        <img width="100"  src="{{ MEDIA_URL }}{{ mark.pizza__image }}#}
-{#                            ">#}
-{#{{ mark.pizza__image }}#}
-{#    {{ mark.pizza__shop__name }}#}
-{#    {% endfor %}#}
 {% endblock %}

@@ -6,11 +6,10 @@
 {% block content %}
     <style>
 
-         .product-item {
+        .product-item {
             width: 100%;
             margin: 0 auto;
             padding: 10px 10px 5px 10px;
-            {#border: 1px solid #eee;#}
             background: white;
             font-family: Calibri;
             overflow: hidden;
@@ -54,26 +53,27 @@
 
     <div class="col s7" style="background: white; height: 600px">
         <div style="margin-left: 20px">
-        {% for shop in shop.all %}
-            <h4 style="color: #896352; font-family: 'Arial';
+            {% for shop in shop.all %}
+                <h4 style="color: #896352; font-family: 'Arial';
                 font-size: 26px; font-weight: bold">
-                {{ forloop.counter }}.
-                <a href="{% url 'shop' shop.id %}"
-                style="color: #896352; font-family: 'Arial';
+                    {{ forloop.counter }}.
+                    <a href="{% url 'shop' shop.id %}"
+                       style="color: #896352; font-family: 'Arial';
                 font-size: 26px; font-weight: bold">
-                {{ shop.name }}
-            </a>
-            </h4>
-        {% endfor %}
+                        {{ shop.name }}
+                    </a>
+                </h4>
+            {% endfor %}
         </div>
     </div>
     <div class="col s5" style="background: white; height: 600px">
 
         <div class="product-item">
             {% for news in news.all %}
-
-                <p style="font-family: 'Arial'; font-size: 16px;
+                <a href="{% url 'new' news.id %}">
+                    <p style="font-family: 'Arial'; font-size: 16px;
                          font-weight: bold; color: #42566b"> {{ news.name }}</p>
+                </a>
                 <p style="font-size: 12px; color: #727174">
                     {{ news.date_news }}</p>
 
@@ -85,29 +85,24 @@
                 <br>
             {% endfor %}
         </div>
-
-    {% for pizza in pizza.all %}
-
+        {% for pizza in pizza.all %}
             <div class="product-item">
-                <div class="product-list">
-{#                        <h5 style="font-weight: bold; font-size: 20px;#}
-{#                        color: #de1d18">#}
-{#            А ты пробовал?#}
-{#        </h5>#}
-                     <a href="{% url 'pizza' pizza.id %}">
-                         <h3> {{ pizza.name }}</h3>
-                         </a>
-                    <br>
-                    <div class="product-img">
-                      <a href="{% url 'pizza' pizza.id %}">
-                          <img width="100"
+            <div class="product-list">
+                <a href="{% url 'pizza' pizza.id %}">
+                    <h3> {{ pizza.name }}</h3>
+                </a>
+                <br>
+                <div class="product-img">
+                    <a href="{% url 'pizza' pizza.id %}">
+                        <img width="100"
                              src="{{ MEDIA_URL }}{{ pizza.image.url }}">
-                      </a>
-                    </div>
-
-                        <span style="font-weight: bold; font-family: 'Arial'">
-                                Состав:</span>
-                    <span class="price">{{ pizza.description }}</span>
+                    </a>
                 </div>
-                {% endfor %}
+                <span style="font-weight: bold; font-family: 'Arial'">
+                                Состав:</span>
+                <span class="price">{{ pizza.description }}</span>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
 {% endblock %}

@@ -5,32 +5,30 @@
 {% block title %}{% endblock %}
 {% block content %}
 
-<style>
-     .product-item {
-        width: 100%;
-        margin: 0 auto;
-        padding: 10px 10px 5px 10px;
-
-        background: white;
-        font-family: Calibri;
-        overflow: hidden;
-        transition: .4s linear;
-    }
-</style>
+    <style>
+        .product-item {
+            width: 100%;
+            margin: 0 auto;
+            padding: 10px 10px 5px 10px;
+            background: white;
+            font-family: Calibri;
+            overflow: hidden;
+            transition: .4s linear;
+        }
+    </style>
     <div class="col s1"></div>
-  <div class="col s10" style="background: white; height: 600px">
+    <div class="col s10" style="background: white; height: 600px">
         <div class="product-item">
             {% for news in news.all %}
 
                 <a href="{% url 'new' news.id %}">
-                <p style="font-family: 'Arial'; font-size: 16px;
+                    <p style="font-family: 'Arial'; font-size: 16px;
                          font-weight: bold; color: #42566b">
-                    {{ news.name }}
-                </p></a>
+                        {{ news.name }}
+                    </p></a>
                 <p style="font-size: 12px; color: #727174">
                     {{ news.date_news }}
                 </p>
-
                 <div style="background: white; text-align: left">
                         <span style="color: #363538; font-size: 12px;
                                 font-family: 'Bookman Old Style'">
@@ -39,6 +37,6 @@
                 <br>
             {% endfor %}
         </div>
-  </div>
-  <div class="col s1"></div>
+    </div>
+    <div class="col s1"></div>
 {% endblock %}

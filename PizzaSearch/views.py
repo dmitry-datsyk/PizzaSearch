@@ -2,14 +2,12 @@ import random
 import re
 import shutil
 import threading
-from multiprocessing import Process
 
 from django.db import connection
 from urllib.request import urlopen
 
 import datetime
 import requests
-from django.contrib.auth.models import User
 from django.db.models import Avg, Count, Max
 from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
@@ -27,10 +25,7 @@ def index(request):
     shop = Shop.objects.all
     news = News.objects.order_by('-date_news')[:2]
     pizza = Pizza.objects.all()
-    # id = []
     id = [(i.id) for i in pizza]
-    # for  piz in pizza:
-    #     id.append(piz.id)
     rand_id = random.choice(id)
     pizza1 = Pizza.objects.filter(id=rand_id).all
     return render(request, 'index.html', {
@@ -42,35 +37,29 @@ def shop(request, shop_id):
     pizza = Pizza.objects.filter(shop_id=shop_id).select_related('shop').all
     return render(request, 'shop.html', {'pizza': pizza})
 
+
 def rating(request):
     rating = Mark.objects.select_related('pizza').select_related(
         'pizza__shop').all
     average_mark = Mark.objects.select_related('pizza').values(
-        'pizza__name', 'pizza__shop__name', 'pizza__id','pizza__shop__id'
-                ).annotate(
+        'pizza__name', 'pizza__shop__name', 'pizza__id', 'pizza__shop__id'
+    ).annotate(
         avg_mark=Avg('mark'), cnt_user=Count('user_id')).order_by('-avg_mark')
     place = []
-    position = 0
-    for id in average_mark:
-        position += 1
-        place.append(position)
-    return  render(request, 'rating.html', {
+    return render(request, 'rating.html', {
         'rating': rating, 'place': place,
-           'average_mark':average_mark })
+        'average_mark': average_mark})
 
 
 def news(request):
-    news = News.objects.all
+    news = News.objects.order_by('-date_news')
     return render(request, 'news.html', {'news': news})
+
 
 def new(request, news_id):
     if request.method == 'GET':
         new = News.objects.filter(id=news_id).all
     return render(request, 'new.html'.format(news_id), {'new': new})
-        # redirect('new', news_id, {'new':new})
-    #render(request, 'news/{}'.format(news_id), {'news': news})
-
-
 
 
 class RegisterFormView(FormView):
@@ -101,145 +90,145 @@ class LogoutView(View):
 
 
 def autamatic_search_data(request):
-    # url = 'https://www.pizzatempo.by/menu/pizza.html'
-    # r = requests.get(url)
-    # with open('test.html', 'w', encoding='utf-8') as output_file:
-    #     output_file.write(r.text)
-    # html = open('test.html', "r", encoding='utf-8').read()
-    # name_piz = []
-    # img_piz = []
-    # descr_piz = []
-    # soup = BeautifulSoup(html, 'lxml')
-    # div = soup.find_all('div', class_=[
-    #     'item group1 novinka_1', 'item group1 novinka_', 'item group2 novinka_',
-    #     'item group3 novinka_'
-    # ])
-    # for pizza in div:
-    #     name = pizza.find('h3').find('span').next_element
-    #     name_piz.append(name)
-    #     image = pizza.find('div', class_='info').find(
-    #         'div', class_='photo').find('img')
-    #     link = image.get('src')
-    #     img_piz.append(link)
-    #     description = pizza.find('div', class_='info').find(
-    #         'div', class_='photo').find(
-    #         'div', class_='composition_holder').find(
-    #         'div', class_='composition').next_element
-    #     descr_piz.append(description)
-    # index = 0
-    # img_piz1 = []
-    # img_piz2 = []
-    # descr_piz1 = []
-    # result = []
-    # while index < len(img_piz):
-    #     with open(
-    #             'C:\\Users\Dmitry\PycharmProjects\\untitled2\PizzaSearch\static\media\items\\tempo{}.jpg'.format(
-    #                 index), 'wb') as img:
-    #         img.write(urlopen(img_piz[index]).read())
-    #     img_piz1.append('items/tempo{}.jpg'.format(index))
-    #     img_piz2.append('tempo{}.jpg'.format(index))
-    #     descr_piz1.append(descr_piz[index][6:-5])
-    #     array = []
-    #     array.append(name_piz[index])
-    #     array.append(img_piz1[index])
-    #     array.append(descr_piz1[index])
-    #     result.append(array)
-        # print(result)
-        # Pizza.objects.create(
-        #     name = array[0], description = array[2], image = array[1],
-        # shop_id=1)
-        # index += 1
-    # image = urlopen(img_piz[0])
-    # Pizza.objects.get(id=1).image.save(
-    #     '{}'.format(img_piz2[0]), image)
+    url = 'https://www.pizzatempo.by/menu/pizza.html'
+    r = requests.get(url)
+    with open('test.html', 'w', encoding='utf-8') as output_file:
+        output_file.write(r.text)
+    html = open('test.html', "r", encoding='utf-8').read()
+    name_piz = []
+    img_piz = []
+    descr_piz = []
+    soup = BeautifulSoup(html, 'lxml')
+    div = soup.find_all('div', class_=[
+        'item group1 novinka_1', 'item group1 novinka_', 'item group2 novinka_',
+        'item group3 novinka_'
+    ])
+    for pizza in div:
+        name = pizza.find('h3').find('span').next_element
+        name_piz.append(name)
+        image = pizza.find('div', class_='info').find(
+            'div', class_='photo').find('img')
+        link = image.get('src')
+        img_piz.append(link)
+        description = pizza.find('div', class_='info').find(
+            'div', class_='photo').find(
+            'div', class_='composition_holder').find(
+            'div', class_='composition').next_element
+        descr_piz.append(description)
+    index = 0
+    img_piz1 = []
+    img_piz2 = []
+    descr_piz1 = []
+    result = []
+    while index < len(img_piz):
+        with open(
+                'C:\\Users\Dmitry\PycharmProjects\\untitled2\PizzaSearch\static\media\items\\tempo{}.jpg'.format(
+                    index), 'wb') as img:
+            img.write(urlopen(img_piz[index]).read())
+        img_piz1.append('items/tempo{}.jpg'.format(index))
+        img_piz2.append('tempo{}.jpg'.format(index))
+        descr_piz1.append(descr_piz[index][6:-5])
+        array = []
+        array.append(name_piz[index])
+        array.append(img_piz1[index])
+        array.append(descr_piz1[index])
+        result.append(array)
+    print(result)
+    Pizza.objects.create(
+        name = array[0], description = array[2], image = array[1],
+    shop_id=1)
+    index += 1
+    image = urlopen(img_piz[0])
+    Pizza.objects.get(id=1).image.save(
+        '{}'.format(img_piz2[0]), image)
 
-    # DOMINOS
-    # url = 'https://dominos.by/ru/Pizza/'
-    # r = requests.get(url)
-    # with open('test1.html', 'w', encoding='utf-8') as output_file:
-    #     output_file.write(r.text)
-    # html = open('test1.html', "r", encoding='utf-8').read()
-    # name_piz = []
-    # img_piz = []
-    # descr_piz = []
-    # soup = BeautifulSoup(html, 'lxml')
-    # div = soup.find_all('div', class_='product_item')
-    # for pizza in div:
-    #     name = pizza.find('p').find('a')
-    #     if name is not None:
-    #         name = name.next_element.lstrip()
-    #         name_piz.append(name)
-    #     image = pizza.find('div', class_='product_img_holder')
-    #     if image is not None:
-    #         image = image.find('a').find('img')
-    #         link = image.get('src')
-    #         img_piz.append(link)
-    #     description = pizza.find('div', class_='product_mix')
-    #     if description is not None:
-    #         description = description.find('p').next_element
-    #         descr_piz.append(description)
-    # index = 0
-    # img_piz1 = []
-    # img_piz2 = []
-    # descr_piz1 = []
-    # result = []
-    # while index < len(img_piz):
-    #     with open(
-    #             'C:\\Users\Dmitry\PycharmProjects\\untitled2\PizzaSearch\static\media\items\\dominos{}.jpg'.format(
-    #                 index), 'wb') as img:
-    #         img.write(urlopen('https://dominos.by/' + img_piz[index]).read())
-    #     img_piz1.append('items/dominos{}.jpg'.format(index))
-    #     img_piz2.append('dominos{}.jpg'.format(index))
-    #     descr = ' '.join(descr_piz[index].split()).lower()
-    #     descr_piz1.append(descr)
-    #     array = []
-    #     array.append(name_piz[index][0:-9])
-    #     array.append(img_piz1[index])
-    #     array.append(descr_piz1[index])
-    #     result.append(array)
-    #     Pizza.objects.create(
-    #         name = array[0], description = array[2], image = array[1],
-    #     shop_id=3)
-    #     index += 1
-    #
+    #DOMINOS
+    url = 'https://dominos.by/ru/Pizza/'
+    r = requests.get(url)
+    with open('test1.html', 'w', encoding='utf-8') as output_file:
+        output_file.write(r.text)
+    html = open('test1.html', "r", encoding='utf-8').read()
+    name_piz = []
+    img_piz = []
+    descr_piz = []
+    soup = BeautifulSoup(html, 'lxml')
+    div = soup.find_all('div', class_='product_item')
+    for pizza in div:
+        name = pizza.find('p').find('a')
+        if name is not None:
+            name = name.next_element.lstrip()
+            name_piz.append(name)
+        image = pizza.find('div', class_='product_img_holder')
+        if image is not None:
+            image = image.find('a').find('img')
+            link = image.get('src')
+            img_piz.append(link)
+        description = pizza.find('div', class_='product_mix')
+        if description is not None:
+            description = description.find('p').next_element
+            descr_piz.append(description)
+    index = 0
+    img_piz1 = []
+    img_piz2 = []
+    descr_piz1 = []
+    result = []
+    while index < len(img_piz):
+        with open(
+                'C:\\Users\Dmitry\PycharmProjects\\untitled2\PizzaSearch\static\media\items\\dominos{}.jpg'.format(
+                    index), 'wb') as img:
+            img.write(urlopen('https://dominos.by/' + img_piz[index]).read())
+        img_piz1.append('items/dominos{}.jpg'.format(index))
+        img_piz2.append('dominos{}.jpg'.format(index))
+        descr = ' '.join(descr_piz[index].split()).lower()
+        descr_piz1.append(descr)
+        array = []
+        array.append(name_piz[index][0:-9])
+        array.append(img_piz1[index])
+        array.append(descr_piz1[index])
+        result.append(array)
+        Pizza.objects.create(
+            name = array[0], description = array[2], image = array[1],
+        shop_id=3)
+        index += 1
+
     #pzz
-    # driver = webdriver.Chrome(
-    #     executable_path='C:\\Users\Dmitry\PycharmProjects\\'
-    #                     'untitled2\PizzaSearch\chromedriver.exe')
-    # driver.get('https://pzz.by/pizzas')
-    # result = driver.find_elements_by_class_name('pizzas-block')
-    # name = [
-    #     res.text for result in result for res in
-    #     result.find_elements_by_tag_name('a') if res.text != '']
-    # image = [
-    #     res.get_attribute('src') for result in result for res in
-    #     result.find_elements_by_tag_name('img')]
-    # description = [
-    #     res.text for result in result for result1 in
-    #     result.find_elements_by_class_name('goods__list__text') for res in
-    #     result1.find_elements_by_tag_name('p')]
-    # if len(name) == len(image) and len(description) == len(description):
-    #     index = 0
-    #     img_piz1 = []
-    #     img_piz2 = []
-    #     result = []
-    #     while index < len(name):
-    #         with open(
-    #                 'C:\\Users\Dmitry\PycharmProjects\\untitled2'
-    #                 '\PizzaSearch\static\media\items\pzz{}.jpg'.format(
-    #                     index), 'wb') as img:
-    #             img.write(urlopen(image[index]).read())
-    #         img_piz1.append('items/pzz{}.jpg'.format(index))
-    #         img_piz2.append('pzz{}.jpg'.format(index))
-    #         array = []
-    #         array.append(name[index])
-    #         array.append(img_piz1[index])
-    #         array.append(description[index])
-    #         result.append(array)
-    #         Pizza.objects.create(
-    #             name=array[0], description=array[2], image=array[1],
-    #             shop_id=2)
-    #         index += 1
+    driver = webdriver.Chrome(
+        executable_path='C:\\Users\Dmitry\PycharmProjects\\'
+                        'untitled2\PizzaSearch\chromedriver.exe')
+    driver.get('https://pzz.by/pizzas')
+    result = driver.find_elements_by_class_name('pizzas-block')
+    name = [
+        res.text for result in result for res in
+        result.find_elements_by_tag_name('a') if res.text != '']
+    image = [
+        res.get_attribute('src') for result in result for res in
+        result.find_elements_by_tag_name('img')]
+    description = [
+        res.text for result in result for result1 in
+        result.find_elements_by_class_name('goods__list__text') for res in
+        result1.find_elements_by_tag_name('p')]
+    if len(name) == len(image) and len(description) == len(description):
+        index = 0
+        img_piz1 = []
+        img_piz2 = []
+        result = []
+        while index < len(name):
+            with open(
+                    'C:\\Users\Dmitry\PycharmProjects\\untitled2'
+                    '\PizzaSearch\static\media\items\pzz{}.jpg'.format(
+                        index), 'wb') as img:
+                img.write(urlopen(image[index]).read())
+            img_piz1.append('items/pzz{}.jpg'.format(index))
+            img_piz2.append('pzz{}.jpg'.format(index))
+            array = []
+            array.append(name[index])
+            array.append(img_piz1[index])
+            array.append(description[index])
+            result.append(array)
+            Pizza.objects.create(
+                name=array[0], description=array[2], image=array[1],
+                shop_id=2)
+            index += 1
 
     url = 'http://presto-pizza.by/group/1/1/'
     r = requests.get(url)
@@ -348,7 +337,6 @@ def pizza(request, pizza_id):
 def autamatic_check(request):
     if request.method == 'POST' and 'check' in request.POST:
         PizzaCheck.objects.all().delete()
-
         # url = 'https://www.pizzatempo.by/menu/pizza.html'
         # r = requests.get(url)
         # with open('tempo.html', 'w', encoding='utf-8') as output_file:
@@ -482,7 +470,6 @@ def autamatic_check(request):
         #             shop_id=2)
         #         index += 1
 
-        dict = {}
         url = 'https://www.pizzatempo.by/menu/pizza.html'
         r = requests.get(url)
         with open('tempo.html', 'w', encoding='utf-8') as output_file:
@@ -659,7 +646,6 @@ def autamatic_check(request):
             result_list.append(dict1)
             index += 1
 
-
         def download(**kwargs):
             with open(
                     'C:\\Users\Dmitry\PycharmProjects\\untitled2'
@@ -677,7 +663,6 @@ def autamatic_check(request):
             threads.append(t)
         for t in threads:
             t.join()
-
 
         cursor = connection.cursor()
         cursor.execute('''select p.id, p.name, p.shop_id, s.website,s.name
