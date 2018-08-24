@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}{% endblock %}
+{% block content %}
+
+    <style>
+     .product-item {
+        width: 100%;
+        margin: 0 auto;
+        padding: 10px 10px 5px 10px;
+
+        background: white;
+        font-family: Calibri;
+        overflow: hidden;
+        transition: .4s linear;
+    }
+</style>
+    <div class="col s1"></div>
+  <div class="col s10" style="background: white; height: 600px">
+        <div class="product-item">
+            {% for news in new.all %}
+
+                <p style="font-family: 'Arial'; font-size: 16px;
+                         font-weight: bold; color: #42566b"> {{ news.name }}</p>
+                <p style="font-size: 12px; color: #727174">
+                    {{ news.date_news }}</p>
+
+                <div style="background: white; text-align: left">
+                        <span style="color: #363538; font-size: 14px;
+                                font-family: 'Bookman Old Style'">
+                         <pre>   {{ news.news|safe }}</pre>
+                        </span>
+                </div>
+
+                <br>
+            {% endfor %}
+        </div>
+  </div>
+  <div class="col s1"></div>
+{% endblock %}

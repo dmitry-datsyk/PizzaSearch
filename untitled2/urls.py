@@ -30,4 +30,9 @@ urlpatterns = [
     url(r'^pizza/(?P<pizza_id>\d+)/$', views.pizza, name='pizza'),
     url(r'^autamatic_check/$', views.autamatic_check, name='check'),
     url(r'^shop/(?P<shop_id>\d+)/$', views.shop, name='shop'),
+    url(r'^rating/$', views.rating, name='rating'),
+    url(r'^news/$', views.news, name='news'),
+    url(r'^news/(?P<news_id>\d+)/$', views.new, name='new'),
+
+
 ]

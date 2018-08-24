@@ -112,25 +112,25 @@
             left: 2px;
         }
 
-        .textarea {
-            overflow: hidden;
-            background: #ffffff;
-            border-color: #9e9da0;
-            width: 99%;
-            word-wrap: break-word;
-            height: 150px;
-            font-size: 14px;
+            .textarea {
+                overflow: hidden;
+                background: #ffffff;
+                border-color: #9e9da0;
+                width: 99%;
+                word-wrap: break-word;
+                height: 150px;
+                font-size: 14px;
 
-        }
+            }
 
-        .leftstr, .rightstr {
-            float: left;
-            width: 50%;
-        }
+            .leftstr, .rightstr {
+                float: left;
+                width: 50%;
+            }
 
-        .rightstr {
-            text-align: right;
-        }
+            .rightstr {
+                text-align: right;
+            }
     </style>
 
     <div class="col s7">
@@ -145,8 +145,8 @@
                              src="{{ MEDIA_URL }}{{ pizza.image.url }}">
                     </div>
 
-                    <span style="font-weight: bold; font-family: 'Arial'">
-                            Состав:</span>
+                        <span style="font-weight: bold; font-family: 'Arial'">
+                                Состав:</span>
                     <span class="price">{{ pizza.description }}</span>
                 </div>
                 {% if user.is_active %}
@@ -190,15 +190,16 @@
                 {{ mark_user }}
             </span>
                         </div>
-                        <br>
+
                     {% endif %}
+                <br>
                     <div style="margin-left: 10px">
                         <span style="font-weight: bold">Рейтинг:</span>
                         <span style="color: #e57812; font-size: 22px; font-weight: bold">
-                {{ num }}
+                {{ num }}</span>
                     <span style="color: #e57812; font-size: 18px;
                     font-weight: bold">({{ count }})</span>
-            </span>
+
                     </div>
 
                     <br>
@@ -273,8 +274,8 @@
                         {% else %}
                         {% endif %}
                     </div>
-                <br>
-                <br>
+{#                <br>#}
+{#                <br>#}
                     <div>
                     <br>
                     <br>

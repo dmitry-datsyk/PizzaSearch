@@ -70,14 +70,10 @@ class Mark(models.Model):
 
 class Comment(models.Model):
     class Meta:
-        verbose_name = 'Комментарий'
-        verbose_name_plural = 'Комментарии'
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
 
-    def __str__(self):
-        return '{}. {}'.format(self.id, self.sphere)
-
-    # user_id = models.IntegerField(verbose_name='ID пользователя')
-    comment = models.TextField(verbose_name='Комментарий')
+    comment = models.TextField(verbose_name='Отзыв')
     date_comment = models.DateField(verbose_name='Дата создания')
     pizza = models.ForeignKey(
         Pizza, related_name='comment', on_delete=models.CASCADE,
@@ -85,3 +81,14 @@ class Comment(models.Model):
     user = models.ForeignKey(
         User, related_name='comment_user', on_delete=models.CASCADE,
         verbose_name='ID user')
+
+
+class News(models.Model):
+    class Meta:
+        verbose_name = 'Новость'
+        verbose_name_plural = 'Новости'
+
+    name = models.CharField(max_length=100, verbose_name='Название')
+    news = models.TextField(verbose_name='Новость')
+    date_news = models.DateField(verbose_name='Дата создания')
+

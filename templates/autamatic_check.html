@@ -4,6 +4,7 @@
 
 {% block title %}{% endblock %}
 {% block content %}
+    {% if request.user.get_username == 'Admin'  %}
     <form method="POST" name="check">
     {% csrf_token %}
     <button type="submit" name="check">Запустить проверку</button>
@@ -93,4 +94,5 @@
     </tr>
     {% endfor %}
     </table>
+    {% endif %}
 {% endblock %}

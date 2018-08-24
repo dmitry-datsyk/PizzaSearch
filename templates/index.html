@@ -4,14 +4,110 @@
 
 {% block title %} Главная страница{% endblock %}
 {% block content %}
+    <style>
 
+         .product-item {
+            width: 100%;
+            margin: 0 auto;
+            padding: 10px 10px 5px 10px;
+            {#border: 1px solid #eee;#}
+            background: white;
+            font-family: Calibri;
+            overflow: hidden;
+            transition: .4s linear;
+        }
 
-    {% for shop in shop.all %}
-        <a href="{%  url 'shop' shop.id  %}">
-        <h4>{{ shop.name }}</h4>
-        </a>
-    {% endfor %}
+        .product-img {
+            transition: 1s ease-in-out;
+        }
 
+        .product-img:hover {
+            transform: scale(1.05);
+        }
 
+        .product-img img {
+            display: block;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
+        .product-list {
+            margin-top: 5px;
+        }
+
+        .product-list h3 {
+            font-weight: 900;
+            color: #cf3626;
+            margin: 0;
+            text-transform: uppercase;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .price {
+            color: #5a5356;
+            display: block;
+            margin-bottom: 12px;
+        }
+    </style>
+
+    <div class="col s7" style="background: white; height: 600px">
+        <div style="margin-left: 20px">
+        {% for shop in shop.all %}
+            <h4 style="color: #896352; font-family: 'Arial';
+                font-size: 26px; font-weight: bold">
+                {{ forloop.counter }}.
+                <a href="{% url 'shop' shop.id %}"
+                style="color: #896352; font-family: 'Arial';
+                font-size: 26px; font-weight: bold">
+                {{ shop.name }}
+            </a>
+            </h4>
+        {% endfor %}
+        </div>
+    </div>
+    <div class="col s5" style="background: white; height: 600px">
+
+        <div class="product-item">
+            {% for news in news.all %}
+
+                <p style="font-family: 'Arial'; font-size: 16px;
+                         font-weight: bold; color: #42566b"> {{ news.name }}</p>
+                <p style="font-size: 12px; color: #727174">
+                    {{ news.date_news }}</p>
+
+                <div style="background: white; text-align: left">
+                        <span style="color: #363538; font-size: 12px;
+                                font-family: 'Bookman Old Style'">
+                        </span>
+                </div>
+                <br>
+            {% endfor %}
+        </div>
+
+    {% for pizza in pizza.all %}
+
+            <div class="product-item">
+                <div class="product-list">
+{#                        <h5 style="font-weight: bold; font-size: 20px;#}
+{#                        color: #de1d18">#}
+{#            А ты пробовал?#}
+{#        </h5>#}
+                     <a href="{% url 'pizza' pizza.id %}">
+                         <h3> {{ pizza.name }}</h3>
+                         </a>
+                    <br>
+                    <div class="product-img">
+                      <a href="{% url 'pizza' pizza.id %}">
+                          <img width="100"
+                             src="{{ MEDIA_URL }}{{ pizza.image.url }}">
+                      </a>
+                    </div>
+
+                        <span style="font-weight: bold; font-family: 'Arial'">
+                                Состав:</span>
+                    <span class="price">{{ pizza.description }}</span>
+                </div>
+                {% endfor %}
 {% endblock %}
